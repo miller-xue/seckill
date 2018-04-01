@@ -1,2 +1,7 @@
+# 过滤.idea文件夹
 .idea
+
+# 过滤iml配置文件
 *.iml
+
+.gitignore
