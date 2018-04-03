@@ -2,6 +2,9 @@ package com.seckill.entity;
 
 import java.util.Date;
 
+/**
+ * 秒杀成功明细
+ */
 public class SuccessKilled {
     /**
      * 秒杀商品ID
@@ -22,6 +25,20 @@ public class SuccessKilled {
      * 秒杀时间
      */
     private Date createTime;
+
+    /**
+     * 变通 多对一
+     */
+    private Seckill seckill;
+
+
+    public Seckill getSeckill() {
+        return seckill;
+    }
+
+    public void setSeckill(Seckill seckill) {
+        this.seckill = seckill;
+    }
 
     @Override
     public String toString() {
