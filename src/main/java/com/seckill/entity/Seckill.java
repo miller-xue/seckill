@@ -3,7 +3,7 @@ package com.seckill.entity;
 import java.util.Date;
 
 /**
- * 秒杀类
+ * 秒杀商品类
  */
 public class Seckill {
 
@@ -28,7 +28,6 @@ public class Seckill {
      */
     private Date endTime;
     /**
-     * 创建时间
      */
     private Date createTime;
 
