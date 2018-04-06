@@ -3,3 +3,4 @@
 
 # 过滤iml配置文件
 *.iml
+*.class
