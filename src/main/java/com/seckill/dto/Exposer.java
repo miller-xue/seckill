@@ -99,4 +99,16 @@ public class Exposer {//曝光器
     public void setEnd(long end) {
         this.end = end;
     }
+
+    @Override
+    public String toString() {
+        return "Exposer{" +
+                "exposed=" + exposed +
+                ", md5='" + md5 + '\'' +
+                ", seckillId=" + seckillId +
+                ", now=" + now +
+                ", start=" + start +
+                ", end=" + end +
+                '}';
+    }
 }

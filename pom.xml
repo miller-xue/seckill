@@ -26,16 +26,19 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.12</version>
         </dependency>
+
         <dependency>
-            <groupId>org.qos.logback</groupId>
+            <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
             <version>1.1.1</version>
         </dependency>
+
         <!--实现slf4j接口并整合-->
         <dependency>
-            <groupId>org.qos.logback</groupId>
+            <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.1.1</version>
+            <scope>test</scope>
         </dependency>
 
         <!--数据库相关依赖-->
