@@ -7,7 +7,6 @@ import com.seckill.entity.Seckill;
 import com.seckill.enums.SeckillStatEnum;
 import com.seckill.exception.RepeatKillException;
 import com.seckill.exception.SeckillCloseException;
-import com.seckill.exception.SeckillExpection;
 import com.seckill.service.SeckillService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +58,7 @@ public class SeckillController {
     public SeckillResult<Exposer> exposer(Long seckillId){
         SeckillResult<Exposer> result;
         try {
+            //对秒杀接口的数据校验已经在Service层做了
             Exposer exposer = seckillService.exportSeckillUrl(seckillId);
             result = new SeckillResult<Exposer>(true,exposer);
         } catch (Exception e) {

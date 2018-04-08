@@ -62,7 +62,7 @@ public class SeckillServiceImpl implements SeckillService {
             return new Exposer(false,seckillId,nowTime.getTime(),startTime.getTime(),endTime.getTime());
         }
 
-        String md5 = this.getMD5(seckillId); //TODO
+        String md5 = this.getMD5(seckillId);
         return new Exposer(true, md5, seckillId);
     }
 
