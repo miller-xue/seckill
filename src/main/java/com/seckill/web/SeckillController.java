@@ -37,7 +37,7 @@ public class SeckillController {
         return "list";
     }
 
-    @RequestMapping(value="/${seckillId}/detail",method = RequestMethod.GET)
+    @RequestMapping(value="/{seckillId}/detail",method = RequestMethod.GET)
     public String detail(Model model,@PathVariable("seckillId") Long seckillId){
         if(seckillId == null){
             return "redirect:/seckill/list";
@@ -51,7 +51,7 @@ public class SeckillController {
     }
 
     //ajax json
-    @RequestMapping(value = "/${seckillId}/exposer",
+    @RequestMapping(value = "/{seckillId}/exposer",
                     method = RequestMethod.POST,
                     produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -69,7 +69,7 @@ public class SeckillController {
     }
 
 
-    @RequestMapping(value = "/${seckillId}/${md5}/execution",
+        @RequestMapping(value = "/{seckillId}/{md5}/execution",
                     method = RequestMethod.POST,
                     produces = {"application/json;charset=UTF-8"})
     @ResponseBody

@@ -8,7 +8,7 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
     <!--配置整合MyBatis过程-->
     <!-- 1:配置数据库相关配置 properties的属性 ${} -->
-    <context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath:jdbc.properties" />
 
     <!-- 2:配置数据源 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
