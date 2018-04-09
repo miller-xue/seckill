@@ -11,25 +11,33 @@ import com.seckill.exception.RepeatKillException;
 import com.seckill.exception.SeckillCloseException;
 import com.seckill.exception.SeckillExpection;
 import com.seckill.service.SeckillService;
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import java.util.Date;
 import java.util.List;
 
+
+@Service
 public class SeckillServiceImpl implements SeckillService {
 
     private Logger logger = LoggerFactory.getLogger(SeckillServiceImpl.class);
 
+    //注入service依赖
+
+    @Autowired
     private SeckillDao seckillDao;
 
+    @Autowired
     private SuccessKilledDao successKilledDao;
 
 
     //md5盐值字符串,用户混淆MD5
-    private final String slat = "dwadbwakdbk2dbKJB@EKJdb2kjDBKJd2DBKJ";
+    private final String slat = "dwadbwakdbk2dbKJB@EdhwiuahduiwahduiwaKJdb2kjDBKJd2DBKJ";
 
 
     public List<Seckill> getSeckillList() {
@@ -49,12 +57,12 @@ public class SeckillServiceImpl implements SeckillService {
         Date startTime = seckill.getStartTime();
         Date endTime = seckill.getEndTime();
         Date nowTime = new Date();
-        if(nowTime.getTime() < startTime.getTime() //不在秒杀时间内
+        if(nowTime.getTime() < startTime.getTime() //不在秒杀时间内w
                 || nowTime.getTime() > endTime.getTime()){
             return new Exposer(false,seckillId,nowTime.getTime(),startTime.getTime(),endTime.getTime());
         }
 
-        String md5 = this.getMD5(seckillId); //TODO
+        String md5 = this.getMD5(seckillId);
         return new Exposer(true, md5, seckillId);
     }
 
@@ -64,9 +72,17 @@ public class SeckillServiceImpl implements SeckillService {
         return DigestUtils.md5DigestAsHex(base.getBytes());
     }
 
+
+    /**
+     * 使用注解控制事务方法的优点
+     * 1:开发团队达成一致约定,明确标注事务方法的编程风格。
+     * 2:保证事务方法的执行时间尽可能短,不要穿插其他的网络操作 RPC/HTTP请求 或者剥离到事务方法外部
+     * 3:不是所有的方法都需要事务,如只有一条修改操作,只读操作不需要事务控制(2条以上才需要事务)
+     */
+    @Transactional
     public SeckillExecuteion executeSeckill(long seckillId, long userPhone, String md5)
             throws SeckillExpection, RepeatKillException, SeckillCloseException {
-        if(md5 == null ||  (md5.equals(getMD5(seckillId)) == false) ){
+        if(md5 == null ||  !md5.equals(getMD5(seckillId)) ){
             throw new SeckillCloseException("seckill data rewrite");
         }
         //减库存

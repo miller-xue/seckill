@@ -14,6 +14,11 @@ public interface SuccessKilledDao {
     int insertSuccessKilled(@Param("seckillId") long seckillId ,@Param("userPhone") long userPhone);
 
 
-
+    /**
+     * 查询秒杀详情与秒杀实体类
+     * @param seckillId
+     * @param userPhone
+     * @return
+     */
     SuccessKilled queryByIdWithSeckill(@Param("seckillId") long seckillId,@Param("userPhone") long userPhone);
 }
