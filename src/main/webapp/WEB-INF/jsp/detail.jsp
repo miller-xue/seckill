@@ -27,9 +27,7 @@
     <%-- 登陆弹出层,输入电话 --%>
     <div id="killPhoneModal" class="modal fade">
         <div class="modal-dialog">
-
             <div class="modal-content">
-
                 <div class="modal-header">
                     <h3 class="modal-title text-center">
                         <span class="glyphicon glyphicon-phone"></span>
