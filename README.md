@@ -11,3 +11,6 @@ idea设置Tomcat Server 而不是TomcatEEServer
 										而不是：value="/${seckillId}/detail"
 										
 错误3：BootStrap的用法。。有时间跟视频修改下自己代码，才能继续下一步
+
+
+错误4：Bootstrap的modal而不是model

@@ -8,8 +8,8 @@
 </head>
 <body>
     <div class="container">
-        <div class="panel  panel-default text-center">
-            <div class="panel-heading  " >
+        <div class="panel  panel-default  text-center">
+            <div class="panel-heading" >
                 <h1>
                     ${seckill.name}
                 </h1>
@@ -26,7 +26,8 @@
     </div>
     <%-- 登陆弹出层,输入电话 --%>
     <div id="killPhoneModal" class="modal fade">
-        <div class="model-dialog">
+        <div class="modal-dialog">
+
             <div class="modal-content">
 
                 <div class="modal-header">
@@ -63,7 +64,6 @@
 <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
 
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <%--使用cnd获取公共js http://www.bootcdn.cn/--%>
 <%--jQuery cookie操作插件--%>
 <script src="http://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
