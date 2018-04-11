@@ -16,7 +16,7 @@ var seckill ={
         }
     },
     handleSeckillKill:function (seckillId,node) {
-        node.hide().html('<button class="btn btn-primary btn-1g" id="killBtn">开始秒杀</button>')
+        node.hide().html('<button class="btn btn-primary btn-1g" id="killBtn">开始秒杀</button>');
         //获取秒杀地址‘
         $.post(seckill.URL.exposer(seckillId),{},function (result) {
             //在回掉函数中执行交互流程
