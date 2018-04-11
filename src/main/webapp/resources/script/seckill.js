@@ -7,10 +7,52 @@ var seckill ={
     URL: {
         now: function () {
             return '/seckill/time/now';
+        },
+        exposer: function (seckillId) {
+            return '/seckill/'+seckillId+'/exposer'
+        },
+        execution: function (seckillId, md5) {
+            return '/seckill/ ' + seckillId + '/' + md5 + '/execution'
         }
     },
-    handleSeckillKill:function (seckillId) {
+    handleSeckillKill:function (seckillId,node) {
+        node.hide().html('<button class="btn btn-primary btn-1g" id="killBtn">开始秒杀</button>')
         //获取秒杀地址‘
+        $.post(seckill.URL.exposer(seckillId),{},function (result) {
+            //在回掉函数中执行交互流程
+            if(result && result['success']){
+                var  exposer = result['data'];
+                if(exposer['exposed']){
+                    //开启秒杀,获取秒杀地址
+                    var killUrl = seckill.URL.execution(seckillId,exposer['md5']);
+                    console.log('killUrl',killUrl);
+                    //绑定一次点击事件
+                    $('#killBtn').one('click',function () {
+                        //绑定执行post请求
+                        $(this).addClass('disabled');
+                        //发生秒杀请求
+                        $.post(killUrl,{},function (result) {
+                            if(result && result['success']){
+                                var killResult = result['data'];
+                                var state = killResult['state'];
+                                var stateInfo = killResult['stateInfo'];
+                                //显示秒杀结果
+                                node.html('<span class="label label-success">'+stateInfo+' </span>')
+                            }
+                        })
+                    })
+                    node.show();
+                }else {
+                    //未开启秒杀
+                    var now = exposer['now'];
+                    var start = exposer['start'];
+                    var end = exposer['end'];
+                    seckill,countDown(seckillId,now,start,end);
+                }
+            }else {
+                console.log('result',result);
+            }
+        });
         //执行秒杀操作
         //设置秒杀成功
     },
@@ -36,11 +78,11 @@ var seckill ={
                 seckillBox.html(formt);
             }).on('finish.countdown',function () {
                 //获取秒杀地址，控制显示逻辑.执行秒杀
-                seckill.handleSeckillKill(seckillId);
+                seckill.handleSeckillKill(seckillId,seckillBox);
             })
         }else {
             //秒杀进行中
-            seckill.handleSeckillKill(seckillId);
+            seckill.handleSeckillKill(seckillId,seckillBox);
         }
     },
     //详情页秒杀逻辑

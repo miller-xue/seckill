@@ -55,7 +55,7 @@ public class SeckillController {
                     method = RequestMethod.POST,
                     produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public SeckillResult<Exposer> exposer(Long seckillId){
+    public SeckillResult<Exposer> exposer(@PathVariable  Long seckillId){
         SeckillResult<Exposer> result;
         try {
             //对秒杀接口的数据校验已经在Service层做了
@@ -82,7 +82,7 @@ public class SeckillController {
         SeckillExecuteion executeion ;
         try {
             executeion = seckillService.executeSeckill(seckillId,phone,md5);
-            return new SeckillResult<SeckillExecuteion>(true,executeion);
+//            return new SeckillResult<SeckillExecuteion>(true,executeion);
         }
         catch (SeckillCloseException e){
             logger.error(e.getMessage(),e);
@@ -96,7 +96,7 @@ public class SeckillController {
             logger.error(e.getMessage(),e);
             executeion = new SeckillExecuteion(seckillId, SeckillStatEnum.INNER_ERROR);
         }
-        return new SeckillResult<SeckillExecuteion>(false,executeion);
+        return new SeckillResult<SeckillExecuteion>(true,executeion);
     }
 
     /**
