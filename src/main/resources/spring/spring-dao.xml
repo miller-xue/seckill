@@ -2,11 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
     <!--配置整合MyBatis过程-->
     <!-- 1:配置数据库相关配置 properties的属性 ${} -->
-    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <context:property-placeholder location="classpath:jdbc.properties" />
 
     <!-- 2:配置数据源 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -26,7 +28,7 @@
         <property name="acquireRetryAttempts" value="2"/>
     </bean>
 
-    <!-- 3:配置SqlSessionFactory对象 -->
+    <!-- 3:配置MyBatis-SqlSessionFactory对象 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!-- 注入数据库连接池 -->
         <property name="dataSource" ref="dataSource"/>
@@ -43,5 +45,11 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
         <!-- 给出扫描DAO接口的包 -->
         <property name="basePackage" value="com.seckill.dao" />
+    </bean>
+
+    <!-- RedisDao -->
+    <bean id="redisDao" class="com.seckill.dao.cache.RedisDao">
+        <constructor-arg index="0" value="192.168.163.134"/>
+        <constructor-arg index="1" value="6379"/>
     </bean>
 </beans>
