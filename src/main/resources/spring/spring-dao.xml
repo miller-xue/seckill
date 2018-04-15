@@ -49,7 +49,7 @@
 
     <!-- RedisDao -->
     <bean id="redisDao" class="com.seckill.dao.cache.RedisDao">
-        <constructor-arg index="0" value="192.168.163.134"/>
+        <constructor-arg index="0" value="192.168.163.136"/>
         <constructor-arg index="1" value="6379"/>
     </bean>
 </beans>
