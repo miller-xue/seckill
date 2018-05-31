@@ -5,7 +5,7 @@ import com.seckill.dto.SeckillExecuteion;
 import com.seckill.entity.Seckill;
 import com.seckill.exception.RepeatKillException;
 import com.seckill.exception.SeckillCloseException;
-import com.seckill.exception.SeckillExpection;
+import com.seckill.exception.SeckillException;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ public interface SeckillService {
      * @param md5
      */
     SeckillExecuteion executeSeckill(long seckillId, long userPhone, String md5)
-        throws SeckillExpection, RepeatKillException, SeckillCloseException;
+        throws SeckillException, RepeatKillException, SeckillCloseException;
 
     /**
      * 执行秒杀操作 by 存储过程

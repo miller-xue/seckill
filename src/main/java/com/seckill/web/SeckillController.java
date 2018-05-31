@@ -28,6 +28,21 @@ public class SeckillController {
     private SeckillService seckillService;
 
 
+    /**
+     * 获得系统当前时间
+     * @return
+     */
+    @RequestMapping(value = "/time/now",method = RequestMethod.GET)
+    @ResponseBody
+    public SeckillResult<Long> time(){
+        return new SeckillResult<Long>(true,new Date().getTime());
+    }
+
+    /**
+     * 商品列表
+     * @param model
+     * @return
+     */
     @RequestMapping(value="/list",method = RequestMethod.GET)
     public String list(Model model){
         //list.jsp + model = ModelAndView
@@ -37,8 +52,15 @@ public class SeckillController {
         return "list";
     }
 
+    /**
+     * 商品详情
+     * @param model
+     * @param seckillId
+     * @return
+     */
     @RequestMapping(value="/{seckillId}/detail",method = RequestMethod.GET)
-    public String detail(Model model,@PathVariable("seckillId") Long seckillId){
+    public String detail(Model model,
+                         @PathVariable("seckillId") Long seckillId){
         if(seckillId == null){
             return "redirect:/seckill/list";
         }
@@ -50,28 +72,41 @@ public class SeckillController {
         return "detail";
     }
 
-    //ajax json
+
+    /**
+     * 暴露秒杀地址
+     * @param seckillId
+     * @return
+     */
     @RequestMapping(value = "/{seckillId}/exposer",
                     method = RequestMethod.POST,
                     produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public SeckillResult<Exposer> exposer(@PathVariable  Long seckillId){
+    public SeckillResult<Exposer> exposer(@PathVariable Long seckillId){
         SeckillResult<Exposer> result;
         try {
             //对秒杀接口的数据校验已经在Service层做了
             Exposer exposer = seckillService.exportSeckillUrl(seckillId);
-            result = new SeckillResult<Exposer>(true,exposer);
-        } catch (Exception e) {
-            logger.error(e.getMessage(),e);
-            result = new SeckillResult<Exposer>(false,e.getMessage());
+            return new SeckillResult<Exposer>(true,exposer);
+        } catch (RuntimeException e) {
+            logger.error(e.getMessage(), e);
+            throw e; //异常抛出交给handle去处理
+//            result = new SeckillResult<Exposer>(false,e.getMessage());
         }
-        return result;
+//        return result;
     }
 
 
-        @RequestMapping(value = "/{seckillId}/{md5}/execution",
-                    method = RequestMethod.POST,
-                    produces = {"application/json;charset=UTF-8"})
+    /**
+     * 执行秒杀
+     * @param seckillId
+     * @param md5
+     * @param phone
+     * @return
+     */
+    @RequestMapping(value = "/{seckillId}/{md5}/execution",
+                method = RequestMethod.POST,
+                produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public SeckillResult<SeckillExecuteion> execute(@PathVariable("seckillId") Long seckillId,
                                                     @PathVariable("md5") String md5,
@@ -99,13 +134,5 @@ public class SeckillController {
         return new SeckillResult<SeckillExecuteion>(true,executeion);
     }
 
-    /**
-     * 获得系统当前时间
-     * @return
-     */
-    @RequestMapping(value = "/time/now",method = RequestMethod.GET)
-    @ResponseBody
-    public SeckillResult<Long> time(){
-        return new SeckillResult<Long>(true,new Date().getTime());
-    }
+
 }

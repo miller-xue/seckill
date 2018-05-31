@@ -10,7 +10,7 @@ import com.seckill.entity.SuccessKilled;
 import com.seckill.enums.SeckillStatEnum;
 import com.seckill.exception.RepeatKillException;
 import com.seckill.exception.SeckillCloseException;
-import com.seckill.exception.SeckillExpection;
+import com.seckill.exception.SeckillException;
 import com.seckill.service.SeckillService;
 import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
@@ -97,7 +97,7 @@ public class SeckillServiceImpl implements SeckillService {
      */
     @Transactional
     public SeckillExecuteion executeSeckill(long seckillId, long userPhone, String md5)
-            throws SeckillExpection, RepeatKillException, SeckillCloseException {
+            throws SeckillException, RepeatKillException, SeckillCloseException {
         if (md5 == null || !md5.equals(getMD5(seckillId))) {
             throw new SeckillCloseException("seckill data rewrite");
         }
@@ -126,11 +126,18 @@ public class SeckillServiceImpl implements SeckillService {
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             //所有编译期异常,转化为运行时异常
-            throw new SeckillExpection("seckill inner error" + e.getMessage());
+            throw new SeckillException("seckill inner error" + e.getMessage());
         }
 
     }
 
+    /**
+     * 执行秒杀的存储过程
+     * @param seckillId
+     * @param userPhone
+     * @param md5
+     * @return
+     */
     public SeckillExecuteion executeSeckillProcedure(long seckillId, long userPhone, String md5) {
         if (md5 == null || !md5.equals(getMD5(seckillId))) {
             return new SeckillExecuteion(seckillId, SeckillStatEnum.DATA_REWRITE);

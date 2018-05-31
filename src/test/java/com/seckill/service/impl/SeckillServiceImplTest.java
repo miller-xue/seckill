@@ -5,7 +5,6 @@ import com.seckill.dto.SeckillExecuteion;
 import com.seckill.entity.Seckill;
 import com.seckill.exception.RepeatKillException;
 import com.seckill.exception.SeckillCloseException;
-import com.seckill.exception.SeckillExpection;
 import com.seckill.service.SeckillService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
